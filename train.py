@@ -68,7 +68,7 @@ def run_training(rank, size, args):
 
     dataset, val_dataset = build_datasets(add_val=True)
 
-    loader = DataLoader(dataset, sampler=DistributedSampler(dataset, size, rank), batch_size=64)
+    loader = DataLoader(dataset, sampler=DistributedSampler(dataset, size, rank), batch_size=args.batch_size)
 
     model = Net(args.norm_type)
     device = torch.device(rank)
@@ -103,7 +103,7 @@ def run_training(rank, size, args):
         acc_train = sum(train_accs) / len(loader)
 
         if args.run_val:
-            acc_val = accuracy(rank, size, model, val_dataset, device)
+            acc_val = accuracy(rank, size, model, val_dataset, args)
             if rank == 0:
                 print(f"Rank {dist.get_rank()}, train_acc: {acc_train}, val_acc: {acc_val}")
         elif rank == 0:
