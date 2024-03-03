@@ -22,9 +22,10 @@ def accuracy(rank, size, model, dataset, args) -> float:
             cur_tensor[-1] = min(real_size, len(dataset) - real_size * idx_tensor)
             lst_idx.append(cur_tensor)
 
-    dist.scatter(ind_tensor, scatter_list=lst_idx)
+    dist.scatter(tensor=ind_tensor, scatter_list=lst_idx)
 
     ind_tensor = ind_tensor[:ind_tensor[-1]]
+    print(f"Get {len(ind_tensor)} indices")
     sub_dataset = Subset(dataset, ind_tensor)
     loader = DataLoader(sub_dataset, batch_size=args.batch_size, drop_last=False)
 
@@ -37,5 +38,7 @@ def accuracy(rank, size, model, dataset, args) -> float:
 
     reduce_tns = torch.tensor([predicted, len(sub_dataset)], dtype=torch.int64, device=device)
     dist.all_reduce(reduce_tns, op=dist.ReduceOp.SUM)
+
+    print(f"Reduced {reduce_tns}")
 
     return reduce_tns[0].item() / reduce_tns[1].item()
