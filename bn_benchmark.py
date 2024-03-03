@@ -15,6 +15,8 @@ torch.set_num_threads(1)
 
 def init_process(local_rank, fn, args, batch_size, hid_dim):
     """Initialize the distributed environment."""
+    os.environ['MASTER_ADDR'] = '127.0.0.1'
+    os.environ['MASTER_PORT'] = '29500'
     dist.init_process_group(args.backend, rank=local_rank, world_size=args.size)
     # size = dist.get_world_size()
     fn(local_rank, args, batch_size, hid_dim)

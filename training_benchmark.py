@@ -14,6 +14,8 @@ from utils import add_spaces
 
 def init_process(local_rank, fn, args, backend="nccl"):
     """Initialize the distributed environment."""
+    os.environ['MASTER_ADDR'] = '127.0.0.1'
+    os.environ['MASTER_PORT'] = '29500'
     dist.init_process_group(backend, rank=local_rank, world_size=args.size)
     size = dist.get_world_size()
     return fn(local_rank, size, args)
