@@ -19,7 +19,7 @@ def init_process(local_rank, fn, args, batch_size, hid_dim):
     os.environ['MASTER_PORT'] = '29500'
     dist.init_process_group(args.backend, rank=local_rank, world_size=args.size)
     # size = dist.get_world_size()
-    fn(local_rank, args, batch_size, hid_dim)
+    return fn(local_rank, args, batch_size, hid_dim)
 
 
 def one_worker_bench(rank, args, batch_size, hid_dim):
