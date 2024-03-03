@@ -71,7 +71,7 @@ def run_training(rank, size, args):
     loader = DataLoader(dataset, sampler=DistributedSampler(dataset, size, rank), batch_size=64)
 
     model = Net(args.norm_type)
-    device = torch.device(args.device)
+    device = torch.device(rank)
     model.to(device)
     optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.5)
 

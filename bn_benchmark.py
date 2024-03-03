@@ -23,7 +23,7 @@ def init_process(local_rank, fn, args, batch_size, hid_dim):
 
 
 def one_worker_bench(rank, args, batch_size, hid_dim):
-    device = torch.device(args.device)
+    device = torch.device(rank)
     if args.norm_type == "lib":
         bn = nn.SyncBatchNorm(num_features=hid_dim, momentum=0.1, eps=1e-5, affine=False)
     else:
@@ -65,7 +65,6 @@ if __name__ == "__main__":
     parser.add_argument("--size", type=int, default=1, help="Number of workers")
     parser.add_argument("--norm_type", type=str, default="custom", help="Type of bnorm: `custom` or `lib`")
     parser.add_argument("--backend", type=str, default="nccl", help="Backend for distributed processes")
-    parser.add_argument("--device", type=str, default="cuda", help="Device `cuda` or `cpu`")
     args = parser.parse_args()
 
     print(f"Started measuring for BatchNorm type = {args.norm_type}")

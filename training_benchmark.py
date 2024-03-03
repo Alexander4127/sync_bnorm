@@ -50,7 +50,6 @@ if __name__ == "__main__":
     parser.add_argument("--run_val", type=bool, default=False, help="Determines run validation epoch or no")
     parser.add_argument("--size", type=int, default=1, help="Number of workers")
     parser.add_argument("--backend", type=str, default="nccl", help="Backend for distributed processes")
-    parser.add_argument("--device", type=str, default="cuda", help="Device `cuda` or `cpu`")
     args = parser.parse_args()
 
     time, result = run_benchmark(args)
