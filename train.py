@@ -94,13 +94,13 @@ def run_training(rank, size, args):
                 average_gradients(model)
                 optimizer.step()
 
-            acc = (output.argmax(dim=1) == target).float().mean().item()
+            acc = (output.argmax(dim=1) == target).float().sum().item()
             train_accs.append(acc)
 
             # if rank == 0:
             #     print(f"Rank {dist.get_rank()}, loss: {epoch_loss.item() / num_batches}, acc: {acc}")
 
-        acc_train = sum(train_accs) / len(loader)
+        acc_train = sum(train_accs) / len(dataset)
 
         if args.run_val:
             acc_val = accuracy(rank, size, model, val_dataset, args)

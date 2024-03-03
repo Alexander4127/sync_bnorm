@@ -5,6 +5,8 @@ from torch.utils.data import Subset, DataLoader
 
 @torch.no_grad()
 def accuracy(rank, size, model, dataset, args) -> float:
+    if rank == 0:
+        print("Running validation epoch...")
     model.eval()
     device = torch.device(rank)
 
