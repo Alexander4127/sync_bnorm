@@ -54,18 +54,18 @@ if __name__ == "__main__":
 
     time, result = run_benchmark(args)
 
-    print(f"Training for BNorm type = {args.norm_type}; Grad Acc = {args.grad_accum}; Num epoch ")
+    print(f"Training for BNorm type = {args.norm_type}; Grad Acc = {args.grad_accum}; Num epoch = {args.n_epoch}")
     if args.run_val:
         train_acs, val_acs, mems = zip(*result)
         print(f"Train acc: "
               f"{np.mean(train_acs):.3f}.\n"
               f"Val acc: {np.mean(val_acs):.3f}.\n"
               f"Time: {time / 1000:.4f} s.\n"
-              f"Memory: {np.sum(mems):.4f} Mb.\n")
+              f"Memory: {np.sum(mems) / 2**20:.4f} Mb.\n")
     else:
         print("Skipping val metrics since validation epoch was disabled...\n")
         train_acs, mems = zip(*result)
         print(f"Train acc: "
               f"{np.mean(train_acs):.3f}.\n"
               f"Time: {time / 1000:.4f} s.\n"
-              f"Memory: {np.sum(mems):.4f} Mb.\n")
+              f"Memory: {np.sum(mems) / 2**20:.4f} Mb.\n")
