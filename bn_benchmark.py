@@ -72,5 +72,5 @@ if __name__ == "__main__":
     for hid_dim in [128, 256, 512, 1024]:
         for batch_size in [32, 64]:
             time, memory = run_benchmark(args, batch_size, hid_dim)
-            time_str, memory_str = f'{time / 1000}:.6f', f'{memory / 2**20}:.6f'
-            print(f"| {hid_dim}        | {batch_size}        |{add_spaces(time_str)}|{add_spaces(memory_str)}")
+            time_str, memory_str = f'{time / 1000:.6f}', f'{memory / 2**20:.6f}'
+            print(f"| {hid_dim}        | {batch_size}         |{add_spaces(time_str)}|{add_spaces(memory_str)}")
