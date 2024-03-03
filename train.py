@@ -90,7 +90,7 @@ def run_training(rank, size, args):
             loss = torch.nn.functional.cross_entropy(output, target)
             epoch_loss += loss.detach()
             loss.backward()
-            if (idx - 1) % args.grad_accum == 0 or idx == len(loader) - 1:
+            if (idx + 1) % args.grad_accum == 0 or idx == len(loader) - 1:
                 average_gradients(model)
                 optimizer.step()
 
