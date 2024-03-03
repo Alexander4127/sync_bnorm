@@ -98,8 +98,8 @@ def run_training(rank, size, args):
             acc = (output.argmax(dim=1) == target).float().mean().item()
             train_accs.append(acc)
 
-            if rank == 0:
-                print(f"Rank {dist.get_rank()}, loss: {epoch_loss.item() / num_batches}, acc: {acc}")
+            # if rank == 0:
+            #     print(f"Rank {dist.get_rank()}, loss: {epoch_loss.item() / num_batches}, acc: {acc}")
             epoch_loss = 0
 
         acc_train = sum(train_accs) / len(loader)
@@ -107,7 +107,9 @@ def run_training(rank, size, args):
         if args.run_val:
             acc_val = accuracy(rank, size, model, val_dataset, device)
             if rank == 0:
-                print(f"Rank {dist.get_rank()}, train_acc: , val_acc: {acc_val}")
+                print(f"Rank {dist.get_rank()}, train_acc: {epoch_loss.item() / len(loader)}, val_acc: {acc_val}")
+        elif rank == 0:
+            print(f"Loss: {epoch_loss.item() / len(loader)}, train_acc: {epoch_loss.item() / len(loader)}")
 
     if args.run_val:
         return acc_train, acc_val, torch.cuda.max_memory_allocated()
