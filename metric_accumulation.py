@@ -18,7 +18,7 @@ def accuracy(rank, size, model, dataset, args) -> float:
     if rank == 0:
         lst_idx = []
         for idx_tensor in range(size):
-            cur_tensor = torch.arange(real_size * idx_tensor, real_size * idx_tensor + tensor_size)
+            cur_tensor = torch.arange(real_size * idx_tensor, real_size * idx_tensor + tensor_size, device=device)
             cur_tensor[-1] = min(real_size, len(dataset) - real_size * idx_tensor)
             lst_idx.append(cur_tensor)
 
