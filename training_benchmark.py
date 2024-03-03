@@ -14,7 +14,7 @@ from utils import add_spaces
 
 def init_process(local_rank, fn, args, backend="nccl"):
     """Initialize the distributed environment."""
-    dist.init_process_group(backend, rank=local_rank)
+    dist.init_process_group(backend, rank=local_rank, world_size=args.size)
     size = dist.get_world_size()
     return fn(local_rank, size, args)
 
