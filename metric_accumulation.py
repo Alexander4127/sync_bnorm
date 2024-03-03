@@ -5,6 +5,7 @@ from torch.utils.data import Subset, DataLoader
 
 @torch.no_grad()
 def accuracy(rank, size, model, dataset, args) -> float:
+    model.eval()
     device = torch.device(rank)
 
     real_size = (len(dataset) + size - 1) // size
