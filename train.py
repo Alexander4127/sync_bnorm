@@ -110,6 +110,6 @@ def run_training(rank, size, args):
                 print(f"Rank {dist.get_rank()}, train_acc: , val_acc: {acc_val}")
 
     if args.run_val:
-        return acc_train, torch.cuda.max_memory_allocated()
+        return acc_train, acc_val, torch.cuda.max_memory_allocated()
 
-    return acc_train, acc_val, torch.cuda.max_memory_allocated()
+    return acc_train, torch.cuda.max_memory_allocated()
